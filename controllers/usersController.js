@@ -62,9 +62,7 @@ function countProperties (obj) {
 }
     countProperties(response);
     console.log(count);              
-    if (count == 1) {
-      res.send('we already have an email or username for this account')
-    }else{
+    if (count == 0) {
 
       bcrypt.genSalt(10, function(err, salt) {
           //res.send(salt)
@@ -87,7 +85,10 @@ function countProperties (obj) {
               });
             });
           });
-      });
+      });      
+
+    }else{
+      res.send('we already have an email or username for this account')
 
     }
   });
