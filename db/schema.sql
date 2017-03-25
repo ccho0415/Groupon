@@ -37,8 +37,8 @@
 
 
 
-CREATE DATABASE groupon_db;
-USE groupon_db;
+-- CREATE DATABASE groupon_db;
+-- USE groupon_db;
 
 CREATE TABLE users
 (
