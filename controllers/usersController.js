@@ -53,13 +53,25 @@ router.post('/create', function(req,res) {
     console.log(typeof response);
     console.log(response);
         var testarr = [];
-    if (Object.keys(response).length == 0) {
-      testarr.push("newuser")
+    var count = 0;        
+function countProperties (obj) {
+    for (var property in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, property)) {
+            count++;
+        }
     }
+
+    return count;
+}
+    countProperties(response);
+    console.log(count);              
+    // if (Object.keys(response).length == 0) {
+    //   testarr.push("newuser")
+    // }
     testarr.push(response);
     console.log(testarr);
     console.log(testarr[0])
-    if (testarr[0] == "newuser") {
+    if (count == 0) {
             bcrypt.genSalt(10, function(err, salt) {
           //res.send(salt)
           bcrypt.hash(req.body.password, salt, function(err, hash) {            
