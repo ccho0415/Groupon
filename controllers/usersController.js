@@ -51,11 +51,16 @@ router.post('/create', function(req,res) {
   console.log(req.body)
   connection.query(query, [ req.body.email ], function(err, response) {
     console.log(typeof response);
-    if (Object.keys(response).length > 0) {
-      res.send('we already have an email or username for this account')
-    }else{
-
-      bcrypt.genSalt(10, function(err, salt) {
+    console.log(response);
+        var testarr = [];
+    if (Object.keys(response).length == 0) {
+      testarr.push("newuser")
+    }
+    testarr.push(response);
+    console.log(testarr);
+    console.log(testarr[0])
+    if (testarr[0] == "newuser") {
+            bcrypt.genSalt(10, function(err, salt) {
           //res.send(salt)
           bcrypt.hash(req.body.password, salt, function(err, hash) {            
             var query = "INSERT INTO users (username, email, password_hash, company) VALUES (?, ?, ?, ?)"
@@ -76,7 +81,11 @@ router.post('/create', function(req,res) {
               });
             });
           });
-      });
+      });  
+
+    }else{
+      res.send('we already have an email or username for this account') 
+
 
     }
   });
