@@ -48,31 +48,13 @@ router.post('/login', function(req, res) {
 
 router.post('/create', function(req,res) {
   var query = "SELECT * FROM users WHERE email = ?"
-  console.log(req.body)
   connection.query(query, [ req.body.email ], function(err, response) {
-    console.log(typeof response);
-    console.log(response);
-        var testarr = [];
-    var count = 0;        
-function countProperties (obj) {
-    for (var property in obj) {
-        if (Object.prototype.hasOwnProperty.call(obj, property)) {
-            count++;
-        }
-    }
+    console.log(response)
+    if (Object.keys(response).length == 1) {
+      res.send('we already have an email or username for this account')
+    }else{
 
-    return count;
-}
-    countProperties(response);
-    console.log(count);              
-    // if (Object.keys(response).length == 0) {
-    //   testarr.push("newuser")
-    // }
-    testarr.push(response);
-    console.log(testarr);
-    console.log(testarr[0])
-    if (count == 0) {
-            bcrypt.genSalt(10, function(err, salt) {
+      bcrypt.genSalt(10, function(err, salt) {
           //res.send(salt)
           bcrypt.hash(req.body.password, salt, function(err, hash) {            
             var query = "INSERT INTO users (username, email, password_hash, company) VALUES (?, ?, ?, ?)"
@@ -93,11 +75,7 @@ function countProperties (obj) {
               });
             });
           });
-      });  
-
-    }else{
-      res.send('we already have an email or username for this account') 
-
+      });
 
     }
   });
