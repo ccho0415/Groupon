@@ -48,10 +48,10 @@ router.post('/login', function(req, res) {
 
 router.post('/create', function(req,res) {
   var query = "SELECT * FROM users WHERE email = ?"
-
+  console.log(req.body)
   connection.query(query, [ req.body.email ], function(err, response) {
-    console.log(response)
-    if (response.length > 0) {
+    console.log(typeof response);
+    if (Object.keys(response).length > 0) {
       res.send('we already have an email or username for this account')
     }else{
 
