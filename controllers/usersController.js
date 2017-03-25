@@ -48,7 +48,9 @@ router.post('/login', function(req, res) {
 
 router.post('/create', function(req,res) {
   var query = "SELECT * FROM users WHERE email = ?"
+              console.log("====================================================================================")
   console.log(req.body);
+              console.log("====================================================================================")  
   connection.query(query, [ req.body.email ], function(err, response) {
     console.log(response)
         var count = 0;        
