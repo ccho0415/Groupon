@@ -48,6 +48,7 @@ router.post('/login', function(req, res) {
 
 router.post('/create', function(req,res) {
   var query = "SELECT * FROM users WHERE email = ?"
+  console.log(req.body);
   connection.query(query, [ req.body.email ], function(err, response) {
     console.log(response)
         var count = 0;        
@@ -60,8 +61,7 @@ function countProperties (obj) {
 
     return count;
 }
-    countProperties(response);
-    console.log(count);              
+    countProperties(response);             
     if (count == 0) {
 
       bcrypt.genSalt(10, function(err, salt) {
@@ -70,7 +70,9 @@ function countProperties (obj) {
             var query = "INSERT INTO users (username, email, password_hash, company) VALUES (?, ?, ?, ?)"
 
             connection.query(query, [ req.body.username, req.body.email, hash, req.body.company ], function(err, response) {
-
+              console.log("====================================================================================")
+              console.log(response)
+              console.log("====================================================================================")              
               req.session.logged_in = true;
 
               req.session.user_id = response.insertId; //only way to get id of an insert for the mysql npm package
