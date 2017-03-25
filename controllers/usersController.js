@@ -62,7 +62,7 @@ function countProperties (obj) {
 }
     countProperties(response);
     console.log(count);              
-    if (count == 0) {
+    if (count == 1) {
       res.send('we already have an email or username for this account')
     }else{
 
